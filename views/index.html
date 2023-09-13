@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing</title>
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on("data", (data) => {
+      console.log(data);
+      let dataElement = document.getElementById("data");
+      dataElement.textContent = "data dari arduino " + data.data;
+    });
+
+    function Arduino(data) {
+      fetch("http://localhost:8088/arduinoApi", {
+        method: "POST",
+        body: JSON.stringify({ data }),
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  </script>
+  <body>
+    <h1>Halo bang</h1>
+    <p id="data"></p>
+    <button onclick="Arduino('1')">Nyalakan</button>
+    <button onclick="Arduino('2')">Matikan</button>
+    <button onclick="Arduino('3')">Ajep Ajep</button>
+  </body>
+</html>
